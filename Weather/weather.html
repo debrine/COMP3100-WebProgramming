@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>
+            Assignment 2 - Weather
+        </title>
+
+        <style>
+            #form_container {
+                display: flex;
+                width: 95%;
+                align-self: center;
+                height: 30%;
+                border: solid thin blue;
+                flex-wrap: wrap;
+                padding: 1%;
+                flex-direction: row;
+                justify-content: space-between;
+                
+            }
+            .double_line {
+                font-size: large;
+                width : 11.5%;
+                height: 10%;
+                background-color: yellow;
+                text-align:  center;
+                padding: 0.5% 0% 1% 0%;
+            }
+            .double_form {
+                width: 37%;
+                height: 10%;
+            }
+
+            .single_line {
+                width: 12%;
+                height: 10%;
+                background-color: yellow;
+                text-align: center;
+                padding: 0.5% 0% 1% 0%;
+            }
+
+            .single_form {
+                width: 87%;
+                height: 10%;
+            }
+
+           
+
+        </style>
+    </head>
+
+    <body>
+        <h1>Editing</h1>
+        <a class='buttons' href='reports.html'>Reports</a>
+        <form id='form_container' method='post'>
+            <label class='double_line'>Location</label>
+                <input id='loc' class='double_form' type='text' name='loc'>
+            <label class='double_line'>Time</label>
+                <input id='time' type='text' name='date' class='double_form'>
+            <label class='single_line'>Description</label>
+                <input id='desc' type='text' name='desc' class='single_form'>
+            <label class="double_line">Low Temp</label>
+                <input id='low' type='number' name='low' class='double_form'>
+            <label class='double_line'>High Temp</label>
+                <input id='high' type='number' name='high' class='double_form'>
+            <label class='double_line'>Avg Wind</label>
+                <input  id='wind' type="number" name='wind' class='double_form'>
+            <label class='double_line'>Avg Direction</label>
+                <input id='dir' type ='number'  name='dir' class='double_form'>
+            <input type="submit" name='op' value='add'>
+        </form>
+        <hr>
+        <h2>Existing Weather Data</h2>
+        <ul>
+            {{ users }}
+        </ul>
+    </body>
+</html>

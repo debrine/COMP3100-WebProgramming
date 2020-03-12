@@ -1,0 +1,13 @@
+<h1>Home Page</h1>
+<a id='logout' href='/logout'>Log Out</a>
+<p>Alter account information for: {{email}}</p>
+<form method="POST" id='home_user'>
+    <label>Email Address:</label>
+        <input type='text' name='email' value={{email}}>
+    <label>Current Password:</label>
+        <input type='text' name='password' value="{{password}}">
+        <input type='hidden' name='id' id={{id}}>
+    <input type="submit" name="op" value="update">
+
+</form>
+{{{admin_content}}}

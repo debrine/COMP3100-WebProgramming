@@ -1,0 +1,46 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#logout {
+            text-align: right;
+            
+}
+
+#users {
+    list-style: none;
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    margin: 0;   
+}
+
+#home_user {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0.5em;
+    margin: 1em;
+    border: solid thin blue;
+    width: 50%;
+}
+
+#user {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    margin: 0;
+    border: solid thin blue;
+    width: 75%;
+}
+
+.alert {
+    color: red;
+}
+
+#buttons {
+    display: flex;
+    width: 20%;
+    justify-content: end;
+}
+

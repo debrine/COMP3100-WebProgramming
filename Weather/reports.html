@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <style>
+            .buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                list-style: none;
+                width: 80%;
+                height: 20%;
+                margin: 10px auto;
+            }
+            .buttons li {
+                height: 3em;
+                padding-top: 12px;
+                flex-basis: 150px;
+                border: olive solid thin;
+                background-color: rgb(70%,70%,70%);
+                border-radius: 15px;
+                text-align: center;
+                width: 15%
+            }
+            .buttons li:hover {
+                background-color: rgb(90%,80%,80%);
+            }
+            .buttons a {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Reports</h1>
+        <a href="weather.html">Editing</a>
+        <ul class="buttons">
+            <li><a href="report1.html">Max Temp</a></li>
+            <li><a href="report2.html">Min Temp</a></li>
+            <li><a href="report3.html">Averages for All</a></li>
+            <li><a href="report4.html">Averages by Location</a></li>
+            <li><a href="report5.html">All Records</a></li>
+        </ul>
+
+        {{ report_data }}
+    </body>
+
+</html>
