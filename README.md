@@ -44,3 +44,6 @@ play_checkers.html and playCheckers.js turns the code above into a custom web co
 
 ## Stars ##
 Created a custom web component that creates an isotoxal star with a specified number of points. This is done using HTML, CSS, SVG and javascript. 
+
+## Charting ##
+Uses HTML, CSS, Javascript as well as the chart.js module. Uses custom web components to accept a list of x and y coordinates then graphs them as a scatter plot. 
