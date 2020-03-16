@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'/>
+        <template id='value-list'>
+            <style>
+                #chart {
+                    display: block;
+                    width: 800px;
+                    height: 500px;
+                }
+                
+                .table {
+                    width: 150px;  
+                    display: inline-block;
+                }
+                .heading {
+                    width: 100%;
+                    text-align: center;
+                    text-emphasis: bold;
+                    border: thin black solid;
+                }
+                .buttons {
+                    display: flex;
+                    align-content: space-between;
+                }
+                .buttons > div {
+                    width: 50%;
+                    background-color: grey;
+                    border: thin black solid;
+                    text-align: center;
+                }
+                .value {
+                    border: thin grey solid;
+                    width: 146px;
+                }
+            </style>
+            <div class='table'>
+                <div class='heading'></div>
+                <div class='buttons'>
+                    <div id='add'>Add</div>
+                    <div id='delete'>Delete</div>
+                </div>
+                <div class='inputs'></div>
+            </div>
+        </template>
+    </head>
+
+    <body>
+        
+        <value-list id='x'>X values</value-list>
+        <value-list id='y'>Y values</value-list>
+        <canvas id='chart'></canvas>
+        <button id='update'>Update Graph</button>
+
+        <script src='./inputLists.js'></script>
+        <script src='Chart.bundle.min.js'></script>
+        <script src='./charting.js'></script>
+    </body>
+</html>
