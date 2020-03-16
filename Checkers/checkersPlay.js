@@ -6,51 +6,12 @@ class CheckerGame extends HTMLElement {
         const shadow = this.attachShadow({mode: 'open'});
         const template = document.getElementById('checker-game');
         const templateContent = template.content;
-        const svg = templateContent.getElementById('board');
+        const svg = templateContent.querySelector('svg');
         
         
         const boardLayout = this.innerHTML.trim();
         const boardLookup = boardLayout.split('\n').map((k) => k.split(''));
         console.log(svg);
-
-        this.addEventListener('mousedown', function(evt) {
-            evt.preventDefault();
-            const target = evt.target;
-            const targetName = target.nodeName;
-            console.log(target);
-            if (targetName !== 'circle') return;
-
-            let oldX = parseFloat(target.getAttribute('cx'));
-            let oldY = parseFloar(target.getAttribute('cy'));
-
-            let delta = svg.createSVGPoint();
-            delta.x = evt.clientX;
-            delta.y = evt.clientY;
-
-            const ctm = target.getScreenCTM();
-            const inv_ctm = ctm.inverse();
-            delta = delta.matrixTransform(inv_ctm);
-
-            oldX -= delta.x;
-            oldY -= delta.y;
-
-            function dragging(evt) {
-                let point = svg.createSVGPoint();
-                point.x = evt.clientX;
-                point.y = evt.clientY;
-                svgPoint = point.matrixTransform(inv_ctm);
-                svgPoint.x += oldX;
-                svgPoint.y += oldY;
-                target.setAttribute('cx', Math.round(svgPoint.x));
-                target.setAttribute('cy', Math.round(svgPoint.y));
-            }
-            svg.addEventListener('mousemove', dragging);
-            window.addEventListener('mouseup', function(evt) {
-                editor.removeEventListener('mousemove', dragging);
-                console.log('stop', evt);
-            }, {once: true});
-
-        });
 
 
         for(let i = 0; i < 10; i++) {
@@ -79,7 +40,12 @@ class CheckerGame extends HTMLElement {
                     }
                 }
                 svg.appendChild(boardSquare);
-    
+            }
+        }
+        
+        
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
                 const pieceSymbol = boardLookup[i][j];
                 
                 let checkersPiece;
@@ -103,12 +69,50 @@ class CheckerGame extends HTMLElement {
             }
         }
         
-
-        
         const cloned = templateContent.cloneNode(true);
         shadow.appendChild(cloned);
 
-        
+        this.shadowRoot.firstElementChild.addEventListener('mousedown', (evt) => {
+            evt.preventDefault();
+            
+            const target = evt.target;
+
+            const targetName = target.nodeName;
+            if (targetName !== 'circle') return;
+
+            let oldX = parseFloat(target.getAttribute('cx'));
+            let oldY = parseFloat(target.getAttribute('cy'));
+
+            let delta = svg.createSVGPoint();
+            delta.x = evt.clientX;
+            delta.y = evt.clientY;
+
+            const ctm = target.getScreenCTM();
+            const inv_ctm = ctm.inverse();
+            delta = delta.matrixTransform(inv_ctm);
+
+            oldX -= delta.x;
+            oldY -= delta.y;
+
+            function dragging(evt) {
+                let point = svg.createSVGPoint();
+                point.x = evt.clientX;
+                point.y = evt.clientY;
+                const svgPoint = point.matrixTransform(inv_ctm);
+                svgPoint.x += oldX;
+                svgPoint.y += oldY;
+
+                target.setAttribute('cx',Math.floor(svgPoint.x) + 0.5);
+                target.setAttribute('cy',Math.floor(svgPoint.y) + 0.5);
+            }
+
+            this.shadowRoot.firstElementChild.addEventListener('mousemove', dragging);
+            window.addEventListener('mouseup', (evt) => {
+                this.shadowRoot.firstElementChild.removeEventListener('mousemove', dragging);
+                console.log('stop', evt);
+            }, {once: true});
+
+        });        
 
     }
      
