@@ -47,3 +47,9 @@ Created a custom web component that creates an isotoxal star with a specified nu
 
 ## Charting ##
 Uses HTML, CSS, Javascript as well as the chart.js module. Uses custom web components to accept a list of x and y coordinates then graphs them as a scatter plot. 
+
+## Sequences ##
+Node web app using Express, JS, HTML, CSS, XMLHttpRequest with JSON message passing between client and server. Uses iterators and generators to generate values, then sends them to the client where they are transformed into HTML elements to be displayed.
+
+## Weather-JSON ##
+Node web app using Express, JS, HTML, CSS, with JSON message passing between client and server. Uses XMLHttpRequest to fetch data from the server and retrieve it as a JSON file, the web page then updates on the client side to show the new data sent by the server.
