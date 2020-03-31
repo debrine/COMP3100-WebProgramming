@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        .element {
+            display: inline-block;
+            text-align: center;
+        }
+
+        div[class='element'][id='Generator'] {
+            padding: 1px;
+            background-color: lightblue;
+            border: thin black solid;
+            font-family: Gill Sans; 
+            font-style: italic;
+        }
+
+        div[class='element'][id='Iterator'] {
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border: thick red dashed;
+            font-family:Times; 
+            font-style:oblique;
+        }
+
+        .container {
+            display:flex;
+            flex-flow: wrap;
+        }
+
+        div[class='container'][id='Generator']{
+            width: 30%;
+            flex-direction: row;
+            justify-content: space-around;
+            border: thick black dashed;
+        }
+
+        div[class='container'][id='Iterator'] {
+            width: 50%;
+            flex-direction: row-reverse;
+            border: thin blue solid;
+            justify-content: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product Sequence</h1>
+    <a href='powerset'>Powerset Sequence</a> <br>
+    <select id='it_or_gen'>
+        <option id='gen'>Generator</option>
+        <option id='it'>Iterator</option>
+    </select>
+    <button id='send'>Send</button>
+    <label for='initial_value'>Initial Value:</label>
+        <input type='number' id='initial_value'/>
+    <label for='mult_value'>Multiplication Factor:</label>
+        <input type='number' id='mult_value'/>
+    <label for='num_elements'>Number of Elements:</label>
+        <input type='number' id='num_elements'/>
+    
+    <div class='container'>
+
+    </div>
+    <script src='productSequence.js'></script>
+    
+</body>

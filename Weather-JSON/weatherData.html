@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        table {
+            border-top: thin blue solid; 
+            border-left: thin blue solid;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            
+        }
+        th, td {border-bottom: thin blue solid; border-right: thin blue solid;}
+        table{text-align: center; border-spacing: 0;}
+    </style>
+    
+</head>
+<body>
+    <h1>REST Test</h1>
+    <button id='load_data'>Load Data</button>
+    <input id='start_date_1' type='date'/>
+    <input id='end_date_1' type='date'/>
+    <table id='table1'>
+        <tr>
+            <th>time</th>
+            <th>maxtemp</th>
+            <th>mintemp</th>
+            <th>meantemp</th>
+            <th>precip</th>
+            <th>rain</th>
+            <th>snow</th>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h1>JSON Test</h1>
+    <button id='load_JSON'>Load Data (JSON)</button>
+    <input id='start_date_2' type='date'/>
+    <input id='end_date_2' type='date'/>
+    <table id='table2'>
+        <tr>
+            <th>time</th>
+            <th>maxtemp</th>
+            <th>mintemp</th>
+            <th>meantemp</th>
+            <th>precip</th>
+            <th>rain</th>
+            <th>snow</th>
+        </tr>
+    </table>
+    
+    <hr>
+
+    <h1>Plotting Test</h1>
+    <button id='plot'>Plot</button>
+    <input id='start_date_3' type='date'/>
+    <input id='end_date_3' type='date'/>
+    <br/>
+    <label for='max_check'>Max Temp:</label>
+        <input value='on' id='max_check' type='checkbox'/>
+    <label for='min_check'>Min Temp:</label>
+        <input id='min_check' type='checkbox'/>
+    <label for='mean_check'>Mean Temp:</label>
+        <input id='mean_check' type='checkbox'/>
+    <label for='precip_check'>Precipitation:</label>
+        <input id='precip_check' type='checkbox'/>
+    <label for='rain_check'>Rain:</label>
+        <input id='rain_check' type='checkbox'/>
+    <label for='snow_check'>Snow:</label>
+        <input id='snow_check' type='checkbox'/>
+    <label for='ground_snow_check'>Ground Snow:</label>
+        <input id='ground_snow_check' type='checkbox'/>
+    
+    <div id='box'>
+        <canvas id='chart'></canvas>
+    </div>
+
+    <script src='Chart.bundle.min.js'></script>
+    <script src='table1.js'></script>
+    <script src='table2.js'></script>
+    <script src='plotChart.js'></script>
+        
+
+        
+    </script>
+</body>

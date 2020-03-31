@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        .element {
+            display: inline-block;
+            text-align: center;
+        }
+
+        div[class='element'][id='Generator'] {
+            padding: 5px;
+            margin: 5px;
+            background-color: pink;
+            font-family: Arial; 
+            font-size:large;
+        }
+
+        div[class='element'][id='Iterator'] {
+            color: green;
+            font-weight: bold;
+        }
+
+        .container {
+            display:flex;
+            flex-flow: wrap;
+            height: 250px;
+        }
+
+        div[class='container'][id='Generator']{
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: lightgrey;
+        }
+
+        div[class='container'][id='Iterator'] {
+            height:100px;
+            flex-direction:column-reverse;
+            border: dotted yellow;
+            justify-content:center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Powerset Sequence</h1>
+    <a href='product'>Product Sequence</a> <br>
+    <select id='it_or_gen'>
+        <option selected='selected' id='gen'>Generator</option>
+        <option id='it'>Iterator</option>
+    </select>
+    <button id='send'>Send</button>
+    <label for='full_set'>Set:</label>
+        <input type='text' id='full_set' placeholder="a, b, c, d, ..."/>
+    
+    <div class='container'>
+
+    </div>
+    <script src='powerSetSequence.js'></script>
+</body>
