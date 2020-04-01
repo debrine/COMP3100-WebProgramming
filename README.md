@@ -40,7 +40,7 @@ B-B-B-B-B-
 Generated Graphic:
 ![](https://i.imgur.com/jGxkD6i.png)
 
-play_checkers.html and playCheckers.js turns the code above into a custom web component for easier use in an HTML document. It also adds the feature of dragging and dropping checker pieces on the board. (Note that there is no checking whether the move is valid or the spce is currently occupied.)
+play_checkers.html and playCheckers.js turns the code above into a custom web component for easier use in an HTML document. It also adds the feature of dragging and dropping checker pieces on the board. (Note that there is no checking whether the move is valid or the space is currently occupied.)
 
 ## Stars ##
 Created a custom web component that creates an isotoxal star with a specified number of points. This is done using HTML, CSS, SVG and javascript. 
