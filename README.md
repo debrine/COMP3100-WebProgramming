@@ -53,3 +53,37 @@ Node web app using Express, JS, HTML, CSS, XMLHttpRequest with JSON message pass
 
 ## Weather-JSON ##
 Node web app using Express, JS, HTML, CSS, with JSON message passing between client and server. Uses XMLHttpRequest to fetch data from the server and retrieve it as a JSON file, the web page then updates on the client side to show the new data sent by the server.
+
+
+## finalProject ##
+This project builds on project_partA. It is a node web app which utilizes Express, JS, HTML, CSS, XMLHttpRequest with JSON message passing, cookie sessions, and templating using hbs. The finalProject is an online spreadsheet sharing site which is spread into several pages.
+
+The initial page is a login page which also provides a link to click if you need to register:
+![](https://i.imgur.com/gvWUYee.png)
+
+Once logged in, the user sees a home page which provides a navigation bar and the ability for the user to edit their account information:
+![](https://i.imgur.com/eAA0X3H.png)
+
+The admin tools tab is available only to administrator accounts, and allows the user to edit or delete any registered user:
+![](https://i.imgur.com/yjPmOaN.png)
+
+The user spreadsheets tab has two seperate areas. The first allows you to rename, change the privacy, delete, or edit any of your sheets:
+![](https://i.imgur.com/KLAgBUd.png)
+
+The second area shows the currently selected sheet for editing. It allows you to add or delete rows or columns, change values, or import or export a sheet as a .csv value:
+![](https://i.imgur.com/08nzhKk.png)
+
+The shared spreadsheets tab allows the user to see a list of every public spreadsheet from every user. If the user is an administrator, they will instead see both private and public spreadsheets. This page provides the option to copy a spreadsheet into the user's sheets so that they can view and edit it:
+![](https://i.imgur.com/hZHEQf0.png)
+
+The charting tab is split into three sections. This tab is used to chart the data from the user's spreadsheets. 
+
+The first section allows you to select which spreadsheet you would like to graph:
+![](https://i.imgur.com/J6RFkUa.png)
+
+The second section allows you to specify the type of graph as well as which rows and columns to graph:
+![](https://i.imgur.com/qmXX2s3.png)
+
+The third section is where you view your generated graph:
+![](https://i.imgur.com/KvL4TlA.png)
+s
