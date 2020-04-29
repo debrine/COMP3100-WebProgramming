@@ -1,0 +1,278 @@
+{{{navBar}}}
+<h1>Charting</h1>
+<ul id='charting_sheets'>
+    {{#each spreadsheets}}
+    <li id='sheet_display'>
+        <div>
+            <p>Sheet Name:</p>
+            <p id='name'>{{name}}</p>
+        </div>
+        <p id='data_as_text'></p>
+        <button id='select_sheet'>Select Sheet</button>
+        <input type='hidden' value='{{id}}' id='id'>
+        <input type='hidden' value='{{data}}' id='data'>
+        <input type='hidden' value='{{name}}' id='name'>
+    </li>
+
+
+    {{/each}}
+</ul>
+<h3 id='selected_sheet'></h3>
+
+<h1>Graph Specifications</h1>
+<p>Graph Format:</p>
+<br>
+<p>For a scatter plot: the first column should be headed by index, and then
+    every value below it is a point on the x axis. The first element in every other column is 
+    the label of the line, and the values below it are corresponding y-values.
+</p> 
+<br>
+<p>For bar and pie graph: The first element in every column is the label, and the values beneath
+    it are the values to be added up for that label.
+</p>
+<p class='alert'>Note: to select all rows or columns, simply leave that field blank</p>
+<div id='graph_specs'>
+    <div>
+        <label>Graph Type:</label>
+        <select id='graph_type'>
+            <option>Scatter Plot</option>
+            <option>Pie Chart</option>
+            <option>Bar Graph</option>
+        </select>
+    </div>
+
+    <div>
+        <label>Selected Rows:</label>
+        <input type='text' id='selected_rows' placeholder='0,1,2,...'>
+    </div>
+    <div>
+        <label>Selected Columns:</label>
+        <input type='text' id='selected_columns' placeholder='0,1,2,...'>
+    </div>
+    <button id='generate_graph'>Generate Graph</button>
+</div>
+
+<h1>Graph</h1>
+
+<div id='graph_box'>
+    
+</div>
+
+<script>
+    let currentId = null;
+    let sheetData = {};
+
+    function convertString(str) {
+        
+        if (str === null) {
+            return null
+        }
+        str = str.trim();
+        str = str.substring(1, str.length - 1);
+        
+        let arr = str.split('/');
+        let finishedArr = [];
+        for (let subArr of arr) {
+            finishedArr.push(subArr.split(','));
+        }
+        return finishedArr;
+    }
+
+    const allSheets = document.getElementById('charting_sheets');
+
+    for (let child of allSheets.children) {
+        const id = child.children['id'].value;
+        const data = child.children['data'].value;
+        const p = child.children['data_as_text'];
+        const name = child.children['name'].value;
+        const setButton = child.children['select_sheet'];
+        const dataAsArray = convertString(data);
+        sheetData[id] = dataAsArray;
+        const selectedName = document.getElementById('selected_sheet');
+        let stringRep = '';
+        for(let row of dataAsArray) {
+            stringRep += row.toString();
+            stringRep += '<br>';
+        }
+        p.innerHTML = stringRep;
+
+        setButton.addEventListener('click', (evt) => {
+            currentId = id;
+            selectedName.innerHTML = `Selected Sheet: ${name}`;
+
+            
+        })
+        
+    }
+</script>
+
+<script src='Chart.bundle.min.js'></script>
+
+<script>
+    const colours = ['red', 'blue', 'green', 'black', 'brown', 'yellow', 'orange', 'pink'];
+    const generateButton = document.getElementById('generate_graph');
+    const graphSelect = document.getElementById('graph_type');
+    const rowSpecify = document.getElementById('selected_rows');
+    const columnSpecify = document.getElementById('selected_columns');
+    const graphBox = document.getElementById('graph_box');
+
+    generateButton.addEventListener('click', (evt) => {
+        const graphValue = graphSelect.value;
+        let graphType;
+
+        //proper names for the chart here
+
+        const sheetId = currentId;
+        const data = sheetData[sheetId];
+        let selectedRows = null;
+        let selectedColumns = null;
+        let selectedRowsString = rowSpecify.value.trim();
+        if (selectedRowsString.length === 0) {
+            //pass
+        }
+        else {
+            selectedRows = selectedRowsString.split(',');
+        }
+        let selectedColumnsString = columnSpecify.value.trim();
+        
+        if (selectedColumnsString.length === 0) {
+            //pass
+        }
+        else {
+            selectedColumns = selectedColumnsString.split(',');
+        }
+        let trimmedData = [];
+
+        if (selectedRows === null && selectedColumns === null) {
+            trimmedData = data;
+        }
+
+        else if (selectedRows != null && selectedColumns === null) {
+            for (let index of selectedRows) {
+                trimmedData.push(data[index]);
+            }
+        }
+        else if (selectedColumns != null && selectedRows === null) {
+            for (let row of data) {
+                let newRow = [];
+                for (let index of selectedColumns) {
+                    newRow.push(row[index]);
+                }
+                trimmedData.push(newRow)
+            }
+        }
+        else {
+            for (let rowIndex of selectedRows) {
+                newRow = [];
+                for (let columnIndex of selectedColumns) {
+                    newRow.push(data[rowIndex][columnIndex]);
+                }
+                trimmedData.push(newRow);
+            }
+        }
+        
+        graphBox.innerHTML = `<canvas id='chart'></canvas>`
+
+        if (graphValue === 'Scatter Plot') {
+            graphType='scatter';
+        }
+        else if (graphValue === 'Pie Chart') {
+            graphType='pie';
+        }
+        else  {
+            graphType='bar';
+        }
+
+        let chart = document.getElementById('chart').getContext('2d');
+        
+        
+        
+        
+        
+        let builtChart = new Chart (chart, {
+            type: graphType,
+            data: {}
+            
+        })
+        
+
+        const scatterLabels = trimmedData[0].slice(1,trimmedData[0].length);
+        const otherLabels = trimmedData[0];
+
+        if (graphType === 'scatter') {
+            builtChart.data.datasets = [];
+            for (let i = 0; i < scatterLabels.length; i ++) {
+                let dataset = {};
+                dataset.label = scatterLabels[i];
+                dataset.showLine = true;
+                dataset.fill = false;
+                dataset.radius = 4;
+                dataset.pointstyle = 'cir';
+                dataset.pointBackgroundColor = colours[i];
+                dataset.borderColor = colours[i];
+                dataset.data = [];
+                let setData = [];
+                for (let j = 0; j < trimmedData.length - 1; j++) {
+                    setData.push({'x': parseInt(trimmedData[j+1][0]), 'y': parseInt(trimmedData[j+1][i+1])});
+                }
+                
+                builtChart.data.datasets.push(dataset);
+                builtChart.data.datasets[i].data = setData
+            }
+            builtChart.update(); 
+        }
+        else if (graphType === 'pie'){
+            builtChart.data = {};
+            builtChart.data.datasets = []
+            builtChart.data.datasets.push({data: []});
+
+            
+            let pieData = [];
+            for (let i = 0; i < otherLabels.length; i++) {
+                pieData.push(parseInt(0));
+            }
+            for (let i = 1; i < trimmedData.length; i++) {
+                for (let j = 0; j < trimmedData[0].length; j++) {
+                    pieData[j] += parseInt(trimmedData[i][j])
+                }
+            }
+            builtChart.data.datasets[0].data = pieData;
+            builtChart.data.labels = otherLabels;
+            builtChart.data.datasets[0].backgroundColor = colours.slice(0, otherLabels.length);
+            builtChart.update();
+        }
+        else if (graphType === 'bar') {
+            builtChart.data = {};
+            builtChart.options = {
+                    scales: {
+                        yAxes: [{
+                            display: true,
+                            ticks: {
+                                beginAtZero: true   // minimum value will be 0.
+                            }
+                        }]
+                    }
+                };
+            builtChart.data.datasets = []
+            builtChart.data.datasets.push({data: []});
+            let barData = [];
+            for (let i = 0; i < otherLabels.length; i++) {
+                barData.push(parseInt(0));
+            }
+            for (let i = 1; i < trimmedData.length; i++) {
+                for (let j = 0; j < trimmedData[0].length; j++) {
+                    barData[j] += parseInt(trimmedData[i][j])
+                }
+            }
+            builtChart.data.datasets[0].data = barData;
+            builtChart.data.labels = otherLabels;
+            
+            builtChart.data.datasets[0].backgroundColor = colours.slice(0, otherLabels.length);
+            builtChart.data.datasets[0].minBarLength = 2;
+            builtChart.update();
+
+        }
+        
+    })
+</script>
+

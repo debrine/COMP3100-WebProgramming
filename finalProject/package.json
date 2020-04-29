@@ -1,0 +1,28 @@
+{
+  "name": "COMP3100-Project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debrine/COMP3100-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/debrine/COMP3100-Project/issues"
+  },
+  "homepage": "https://github.com/debrine/COMP3100-Project#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chart.js": "^2.9.3",
+    "cookie-session": "^1.4.0",
+    "express": "^4.17.1",
+    "express-hbs": "^2.3.0",
+    "sqlite3": "^4.1.1"
+  }
+}
