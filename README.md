@@ -56,7 +56,7 @@ Node web app using Express, JS, HTML, CSS, with JSON message passing between cli
 
 
 ## finalProject ##
-This project builds on project_partA. It is a node web app which utilizes Express, JS, HTML, CSS, XMLHttpRequest with JSON message passing, cookie sessions, and templating using hbs. The finalProject is an online spreadsheet sharing site which is spread into several pages.
+This project builds on project_partA. It is a node web app which utilizes Express, JS, HTML, CSS, XMLHttpRequest with JSON message passing, cookie sessions, sqlite3 and templating using hbs. The finalProject is an online spreadsheet sharing site which is spread into several pages.
 
 For instructions to run this program, read the readme.txt file in the finalProject directory.
 
