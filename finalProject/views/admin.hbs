@@ -1,0 +1,27 @@
+{{{navBar}}}
+<h1>All users</h1>
+
+<p class='alert'>Note: If you delete or alter the permissions of your own account, please re-log to apply those changes.</p>
+<ul id='users'>
+    {{#each users}}
+    <li>
+        <form method='POST' id='user'>
+            <label>Username:</label>
+                <input type='text' name='email' value={{email}}>
+            <label>Password:</label>
+                <input type='text' name='password' value={{password}}>
+            <input type='hidden' value={{id}} name='id'>
+            <label>Role:</label>
+                <select name='role'>
+                    <option value='user' {{#if is_user}} selected {{/if}}>User</option>
+                    <option value='admin' {{#if is_admin}} selected {{/if}}>Admin</option>
+                </select>
+            <div id='buttons'>
+                <input type='submit' value='update' name='op'>
+                <input type='submit' value='delete' name='op'>
+            </div>
+        </form>  
+    </li>
+    {{/each}}
+</ul>
+

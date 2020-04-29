@@ -1,0 +1,320 @@
+{{{navBar}}}
+<template id='spread-sheet'>
+    <style>
+    #buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #buttpns > * {
+        width: 15%;
+    }
+
+    #sheet_inputs > * {
+        width: 2000px;
+    }
+    #csv {
+        display: flex;
+        justify-content: space-evenly;
+    }
+    #csv > * {
+        width: 30%;
+    }
+
+</style>
+<div id='buttons'>
+    <button id='add_row'>Add Row</button>
+    <button id='add_column'>Add Column</button>
+    <button id='delete_row'>Delete Selected Row</button>
+    <button id='delete_column'>Delete Selected Column</button>
+    <button id='save'>Save Changes</button>
+</div>
+<br>
+<div id='csv'>
+    <button id='csv_download'>Download Data</button>
+    <div id='label_and_info'>
+    <p>Load CSV File:</p>
+    <input type='file' id='csv_load'></button>
+    </div>
+</div>
+<br>
+<div id='sheet_inputs'></div>
+
+
+</template>
+
+
+<h1>User Spreadsheets</h1>
+
+<ul id='user_spreadsheets'>
+</ul>
+
+
+<h1>Create New Sheet</h1>
+<div id='sheet_form'>
+    <div>
+        <label>Sheet Name:</label>
+            <input type='text' id='new_sheet_name'>
+    </div>
+    <div>
+        <label>Privacy:</label>
+            <select id='new_privacy'>
+                <option>public</option>
+                <option>private</option>
+            </select>
+    </div>
+    <button id='add_new_sheet'>Create Sheet</button>
+</div>
+
+
+
+<h1>Edit Spreadsheet</h1>
+<h3 id='sheet_title'></h3>
+<div id='sheet_container'>
+</div>
+
+<script>
+    const userSheets = document.getElementById('user_spreadsheets');
+    let req = new XMLHttpRequest();
+    const sheetTitle = document.getElementById('sheet_title');
+    const sheetContainer = document.getElementById('sheet_container');
+    let sheetData = {};
+    
+    function convertString(str) {
+        
+        if (str === null) {
+            return null
+        }
+        str = str.trim();
+        str = str.substring(1, str.length - 1);
+        
+        let arr = str.split('/');
+        let finishedArr = [];
+        for (let subArr of arr) {
+            finishedArr.push(subArr.split(','));
+        }
+        return finishedArr;
+    }
+
+    req.open('POST', '/user_sheets');
+    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    req.responseType = 'json'; 
+    req.onload = function(evt) {
+        if ( req.status == 200 ) {
+            userSheets.innerHTML = '';
+            let res = req.response;
+            console.log('res', res);
+            let sheets = res;
+            for (let sheet of sheets) {
+                let id = sheet.id;
+                sheetData[sheet.id] = convertString(sheet.data);
+                const li = document.createElement('li');
+                
+                const nameInput = document.createElement('input');
+                nameInput.setAttribute('type', 'text');
+                nameInput.value = sheet.name;
+                li.appendChild(nameInput)
+
+                const privacySelect = document.createElement('select');
+                privacySelect.setAttribute('id', 'privacy_select');
+                /*const publicOption = document.createElement('option');
+                publicOption.value = 'public';
+                const privateOption = document.createElement('option');
+                privateOption.value = 'private';
+                privacySelect.appendChild(publicOption);
+                privacySelect.appendChild(privateOption);
+                
+                */
+                privacySelect.innerHTML = `<option>public</option><option>private</option>`
+                privacySelect.value = sheet.visibility;
+                li.appendChild(privacySelect);
+                const updateButton = document.createElement('button');
+                updateButton.setAttribute('id', 'update');
+                updateButton.innerHTML = 'Update';
+                updateButton.addEventListener('click', (evt) => {
+                    let req = new XMLHttpRequest();
+                    req.open('POST', '/user_sheets');
+                    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    req.responseType = 'json';
+                    req.onload = function(evt) {
+                        if (req.status == 200) {
+                            if (req.response.status === 'success') {
+                            alert('update successful');
+                            }
+                            else {
+                            }
+                        }
+                    }
+                    const id = sheet.id;
+                    const name = nameInput.value;
+                    const privacy = privacySelect.value;
+                    let message = {
+                        request: 'update',
+                        name: name,
+                        id: id,
+                        privacy: privacy
+                    };
+                    req.send(JSON.stringify(message)); 
+                });
+                li.appendChild(updateButton);
+
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = 'Delete';
+                deleteButton.setAttribute('id', 'delete');
+                deleteButton.addEventListener('click', (evt) => {
+                    let req = new XMLHttpRequest();
+                    req.open('POST', '/user_sheets');
+                    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                    req.responseType = 'json';
+                    req.onload = function(evt) {
+                        if (req.status == 200) {
+                            userSheets.removeChild(li);
+                            }
+                            else {
+                                console.log('error', req.response.error);
+                            }
+                        
+                    }
+                    const id = sheet.id;
+                    let message = {
+                        request: 'delete',
+                        id: id
+                    };
+                    req.send(JSON.stringify(message));
+                })
+                li.appendChild(deleteButton);
+
+                const editButton = document.createElement('button');
+                editButton.setAttribute('id', 'edit');
+                editButton.innerHTML = 'Edit';
+                editButton.addEventListener('click', (evt) => {
+                    sheetTitle.innerHTML = `Editing Sheet: ${sheet.name}`;
+                    sheetContainer.innerHTML = `<spread-sheet>${id}</spread-sheet>`;
+                })
+                li.appendChild(editButton);
+                userSheets.appendChild(li);
+
+            }
+        }
+        else {
+            console.log('error could not retrieve');
+        }
+    }
+            let message = {request:'spreadsheets'};
+            req.send(JSON.stringify(message));
+</script>
+<script>
+    const createButton = document.getElementById('add_new_sheet');
+    createButton.addEventListener('click', (evt) => {
+        const name = document.getElementById('new_sheet_name').value;
+        const privacy = document.getElementById('new_privacy').value;
+        let req = new XMLHttpRequest();
+            req.open('POST', '/user_sheets')
+            req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            req.responseType = 'json';
+
+            req.onload = function(evt) {
+                if ( req.status == 200 ) { 
+                    let res = req.response;
+                    if (res.status === 'duplicate') {
+                        alert('Error: A spreadsheet with that name already exists.');
+                    }
+                    else {
+                    const id = res.id;
+                    sheetData[id] = null;
+                    console.log('response', res);
+                    const li = document.createElement('li');
+                
+                    const nameInput = document.createElement('input');
+                    nameInput.setAttribute('type', 'text');
+                    nameInput.value = name;
+                    li.appendChild(nameInput)
+
+                    const privacySelect = document.createElement('select');
+                    privacySelect.setAttribute('id', 'privacy_select');
+                    privacySelect.innerHTML = `<option>public</option><option>private</option>`
+                    privacySelect.value = privacy;
+                    li.appendChild(privacySelect);
+
+                    const updateButton = document.createElement('button');
+                    updateButton.setAttribute('id', 'update');
+                    updateButton.innerHTML = 'Update';
+                    updateButton.addEventListener('click', (evt) => {
+                        let req = new XMLHttpRequest();
+                        req.open('POST', '/user_sheets');
+                        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                        req.responseType = 'json';
+                        req.onload = function(evt) {
+                            if (req.status == 200) {
+                                if (req.response.status === 'success') {
+                                alert('update successful');
+                                }
+                                else {
+                                    console.log('error', req.response.error);
+                                }
+                            }
+                        }
+                        const name = nameInput.value;
+                        const privacy = privacySelect.value;
+                        let message = {
+                            request: 'update',
+                            name: name,
+                            id: id,
+                            privacy: privacy
+                        };
+                        req.send(JSON.stringify(message)); 
+                    });
+                    li.appendChild(updateButton);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerHTML = 'Delete';
+                    deleteButton.setAttribute('id', 'delete');
+                    deleteButton.addEventListener('click', (evt) => {
+                        let req = new XMLHttpRequest();
+                        req.open('POST', '/user_sheets');
+                        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                        req.responseType = 'json';
+                        req.onload = function(evt) {
+                            if (req.status == 200) {
+                                userSheets.removeChild(li);
+                                }
+                                else {
+                                    console.log('error', req.response.error);
+                                }
+
+                        }
+                        
+                        let message = {
+                            request: 'delete',
+                            id: id
+                        };
+                        req.send(JSON.stringify(message));
+                    })
+                    li.appendChild(deleteButton);
+
+                    const editButton = document.createElement('button');
+                    editButton.setAttribute('id', 'edit');
+                    editButton.innerHTML = 'Edit';
+                    editButton.addEventListener('click', (evt) => {
+                        sheetContainer.innerHTML = `<spread-sheet>${id}</spread-sheet>`;
+                        sheetTitle.innerHTML = `Editing Sheet: ${name}`;
+                    })
+                    li.appendChild(editButton);
+                    userSheets.appendChild(li);
+                    }
+
+                    }
+                    else {
+                     console.log('err', req );
+                     }
+            }   
+            let message = {
+                request: 'add',
+                name: name,
+                privacy: privacy
+            };
+            req.send(JSON.stringify(message));
+
+    })
+</script>
+<script src='SpreadSheet.js'></script>

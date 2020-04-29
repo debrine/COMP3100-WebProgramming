@@ -1,0 +1,176 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#logout {
+            text-align: right;
+            
+}
+
+#users {
+    list-style: none;
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    margin: 0;   
+}
+
+#home_user {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 0.5em;
+    margin: 1em;
+    border: solid thin blue;
+    width: 50%;
+}
+
+#user {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5em;
+    margin: 0;
+    border: solid thin blue;
+    width: 75%;
+}
+
+.alert {
+    color: red;
+}
+
+#buttons {
+    display: flex;
+    width: 20%;
+    justify-content: end;
+}
+
+.nav_bar {
+    display: flex;
+    justify-content: space-between;
+    line-height: 2;
+    width: 100%;
+    background-color: lightblue;
+    border-top: thin black solid;
+    border-left: thin black solid;
+    border-bottom: thin black solid;
+}
+
+.nav_bar[id='user_nav'] a {
+    width: 20%;
+    text-align: center;
+    border-right: thin black solid;
+}
+
+.nav_bar[id='admin_nav'] a {
+    width: 16.666667%;
+    text-align: center;
+    border-right: thin black solid;
+}
+
+.shared_sheet {
+    display: flex;
+    flex-direction: row;
+    border: thin blue solid;
+    justify-content: space-between;
+}
+
+.shared_sheet * {
+    display: inline-block;
+}
+
+#spreadsheets  {
+    list-style: none;
+}
+
+.label_and_info {
+    width: 40%;
+}
+
+#user_spreadsheets {
+    list-style: none;
+}
+
+#user_spreadsheets > * {
+    display: flex;
+    border: thin blue solid;
+    justify-content: space-between;
+    flex-direction: row;
+    line-height: 3;
+}
+
+#sheet_form {
+    display: flex;
+    border: thin blue solid;
+    justify-content: space-between;
+    flex-direction: row;
+    line-height: 3;
+}
+
+h1 {
+    text-align: center;
+    background-color: lightblue;
+    border: blue solid;
+}
+
+h3 {
+    color: blue;
+    text-align: center;
+}
+
+#charting_sheets {
+    list-style: none;
+}
+
+#charting_sheets > * {
+    display: flex;
+    justify-content: space-evenly;
+    border: thin blue solid;
+    
+}
+
+#charting_sheets > * > * {
+    display: inline-block;
+    width: 33.33%
+}
+
+#graph_specs {
+    display: flex;
+    justify-content: space-between;
+    border: thin blue solid;
+}
+
+#graph_specs > * {
+    display: inline-block;
+}
+
+#selected_sheet {
+    text-align: center;
+    color: blue;
+}
+
+#stats_container > div {
+    display: flex;
+    justify-content: space-between;
+    border: thin blue solid;
+    margin-top: 20px;
+}
+
+#stats_container > div > * {
+    display: inline-block;
+}
+
+#sheets_by_user {
+    
+    list-style: none;
+
+}
+#sheets_by_user > li {
+    display:flex;
+    justify-content: space-evenly;
+    border: thin blue solid;
+    width: 40%;
+}
+
+#sheets_by_user > * > * {
+    display: inline-block
+}

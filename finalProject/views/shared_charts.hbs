@@ -1,0 +1,55 @@
+{{{navBar}}}
+<h1>Shared Spreadsheets</h1>
+
+<ul id='spreadsheets'>
+    {{#each spreadsheets}}
+    <li>
+        <div class='shared_sheet'>
+            <div class='label_and_info'>
+                <p>Spreadsheet Name: </p>
+                <p>{{name}}</p>
+            </div>
+            <div class='label_and_info'>
+                <p>Written by:</p>
+                <p>{{email}}</p>
+            </div>
+            <div class='label_and_info'>
+                <p>Privacy:</p>
+                <p>{{visibility}}</p>
+            </div>
+            <button id='copy{{id}}'>Copy Sheet</button>
+        </div>
+    </li>
+    <script>
+        let copyIDString{{id}} = 'copy'+{{id}};
+        let copyButton{{id}} = document.getElementById(copyIDString{{id}});
+        copyButton{{id}}.addEventListener('click', (evt) => {
+            let req = new XMLHttpRequest();
+            req.open('POST', '/shared_sheets')
+            req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            req.responseType = 'json';
+
+            req.onload = function(evt) {
+                if ( req.status == 200 ) { 
+                    let res = req.response;
+                    console.log('response', res);
+                    if (res.error) {
+                        alert(`error: this sheet has already been copied. Please rename your current
+                        copy if you wish to recopy it.`);
+                    }
+                    else if (res.status) {
+                        alert('Successfully copied.');
+                    }
+                }
+                else {
+                 console.log('err', req );
+                 }
+            }
+            let message = {
+                id: {{id}},
+            };
+            req.send(JSON.stringify(message));
+        })
+    </script>
+    {{/each}}
+</ul>
