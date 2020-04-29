@@ -58,6 +58,8 @@ Node web app using Express, JS, HTML, CSS, with JSON message passing between cli
 ## finalProject ##
 This project builds on project_partA. It is a node web app which utilizes Express, JS, HTML, CSS, XMLHttpRequest with JSON message passing, cookie sessions, and templating using hbs. The finalProject is an online spreadsheet sharing site which is spread into several pages.
 
+For instructions to run this program, read the readme.txt file in the finalProject directory.
+
 The initial page is a login page which also provides a link to click if you need to register:
 ![](https://i.imgur.com/gvWUYee.png)
 
@@ -86,4 +88,4 @@ The second section allows you to specify the type of graph as well as which rows
 
 The third section is where you view your generated graph:
 ![](https://i.imgur.com/KvL4TlA.png)
-s
+
